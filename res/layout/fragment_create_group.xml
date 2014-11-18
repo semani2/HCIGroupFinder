@@ -54,16 +54,16 @@
         </EditText>
 
         <TextView
-            android:id="@+id/emailText"
+            android:id="@+id/placeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="Email"
+            android:text="Place of meeting"
             android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/emailEditText"
+            android:id="@+id/placeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10" >
@@ -71,59 +71,51 @@
         </EditText>
 
         <TextView
-            android:id="@+id/passwordText"
+            android:id="@+id/DateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="Password"
+            android:text="Date of meeting"
             android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/passwordEditText"
+            android:id="@+id/dateEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="text|date" />
         
         <TextView
-            android:id="@+id/departmentText"
+            android:id="@+id/timeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="Major"
+            android:text="Time"
             android:textSize="20dp" />
-
-        <Spinner
-            android:id="@+id/majorSpinner"
+        
+        <EditText
+            android:id="@+id/timeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/Major"
-            android:prompt="@string/MajorPrompt" />
+            android:ems="10"
+            android:inputType="text|time" />
 
+        
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/createButton"
             android:layout_width="146dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:background="@color/SkyBlue"
-            android:text="Register"
+            android:text="Create"
             android:textColor="@color/White"
             android:textColorHint="@color/White"
             android:textSize="22dp" />
 
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/White"
-            android:text="Already have an account? Log in"
-            android:textColor="@color/SkyBlue"
-            android:textSize="22dp" />
+        
     </LinearLayout>
     
 
