@@ -71,7 +71,7 @@ public class LoginActivity extends Activity {
 				    public void onAuthenticated(AuthData authData) {
 				    	
 				    	// Create session
-				    	session.createLoginSession(email);
+				    	session.createLoginSession(email,authData.getUid());
 				    	
 				        //Login successful navigating to home page
 				    	Intent goHome = new Intent(LoginActivity.this, HomeActivity.class);
@@ -82,7 +82,7 @@ public class LoginActivity extends Activity {
 				    @Override
 				    public void onAuthenticationError(FirebaseError error) {
 				        //Login Failed
-				    	Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+				    	Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
 				    	
 				    	// clear edit text
 				    	emailEditText.setText("");

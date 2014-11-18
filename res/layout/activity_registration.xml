@@ -97,14 +97,14 @@
             android:textSize="20dp" />
 
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/majorSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/Major"
             android:prompt="@string/MajorPrompt" />
 
         <Button
-            android:id="@+id/continueButton"
+            android:id="@+id/registerButton"
             android:layout_width="146dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

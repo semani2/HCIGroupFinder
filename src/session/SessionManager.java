@@ -1,6 +1,7 @@
 package session;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import prajnan.hci.studygroupfinder.LoginActivity;
 
@@ -31,6 +32,8 @@ public class SessionManager {
      
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
+    
+    public static final String KEY_UID = "uid";
      
     // Constructor
     public SessionManager(Context context){
@@ -42,12 +45,15 @@ public class SessionManager {
     /**
      * Create login session
      * */
-    public void createLoginSession(String email){
+    public void createLoginSession(String email,String UID){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
          
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
+        
+        //Storing UID in pref
+        editor.putString(KEY_UID, UID);
          
         // commit changes
         editor.commit();
@@ -80,11 +86,14 @@ public class SessionManager {
     /**
      * Get stored session data
      * */
-    public String getUserDetails(){
-        String user;
+    public Map<String, String> getUserDetails(){
         
+        Map<String, String> user  = new HashMap<String, String>();
         // user email id
-        user = pref.getString(KEY_EMAIL, null);
+        user.put(KEY_EMAIL,pref.getString(KEY_EMAIL, null));
+        
+        //user UID
+        user.put(KEY_UID,pref.getString(KEY_UID, null));
          
         // return user
         return user;
