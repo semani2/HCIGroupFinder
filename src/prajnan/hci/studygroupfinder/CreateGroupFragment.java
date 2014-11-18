@@ -14,6 +14,7 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +79,7 @@ public class CreateGroupFragment extends Fragment implements OnClickListener {
                 DatePickerDialog mDatePicker=new DatePickerDialog(getActivity(), new OnDateSetListener() {                  
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                         // TODO Auto-generated method stub                      
-                    	updateLabel();
+                    	dateEditText.setText(selectedmonth+"/"+selectedday+"/"+selectedyear);
                     }
                 },mYear, mMonth, mDay);
                 mDatePicker.getDatePicker().setCalendarViewShown(false);
@@ -142,7 +143,12 @@ public class CreateGroupFragment extends Fragment implements OnClickListener {
 					
 					//Retreieving the group ID
 					groupId = newGroupsRef.getKey();
-					Toast.makeText(getActivity(), groupId, Toast.LENGTH_LONG).show();
+					//Toast.makeText(getActivity(), groupId, Toast.LENGTH_LONG).show();
+					//Group created, navigate to user to page to add members to group
+					Intent addMembers = new Intent(getActivity(),CreateGroup2.class);
+					addMembers.putExtra("groupId", groupId);
+					startActivity(addMembers);
+					
 				}
 				
 			}
@@ -153,13 +159,6 @@ public class CreateGroupFragment extends Fragment implements OnClickListener {
         return rootView;
     }
     
-    private void updateLabel() {
-
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        dateEditText.setText(sdf.format(mcurrentDate.getTime()));
-        }
 
 	@Override
 	public void onClick(View v) {

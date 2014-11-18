@@ -18,7 +18,6 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name" >
-            
         </activity>
         <activity
             android:name=".RegistrationActivity"
@@ -36,6 +35,10 @@
         <activity
             android:name=".CreateGroupActivity"
             android:label="@string/title_activity_create_group" >
+        </activity>
+        <activity
+            android:name=".CreateGroup2"
+            android:label="@string/title_activity_create_group2" >
         </activity>
     </application>
 

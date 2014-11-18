@@ -133,6 +133,7 @@ public class RegistrationActivity extends Activity {
 			    	        sgfFirebase.child("users").child(authData.getUid()).setValue(map);
 			    	        sgfFirebase.child("users").child(authData.getUid()).child("Name").setValue(name);
 			    	        sgfFirebase.child("users").child(authData.getUid()).child("Major").setValue(major);
+			    	        sgfFirebase.child("users").child(authData.getUid()).child("Email").setValue(email);
 			    	        
 			    	        //Initialize session
 			    	        session.createLoginSession(email,authData.getUid());
