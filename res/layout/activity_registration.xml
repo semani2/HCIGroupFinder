@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/White"
-    tools:context="prajnan.hci.studygroupfinder.LoginActivity" >
+    tools:context="prajnan.hci.studygroupfinder.RegistrationActivity" >
 
-    <!-- Header -->
+     <!-- Header -->
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -31,17 +31,35 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="360dp"
-        android:layout_height="350dp"
+        android:layout_height="450dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="18dp"
         android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Full Name"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
 
         <TextView
             android:id="@+id/emailText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:text="Email"
             android:textSize="20dp" />
 
@@ -50,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10" >
+
         </EditText>
 
         <TextView
@@ -66,34 +85,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword" >
-        </EditText>
+            android:inputType="textPassword" />
+        
+        <TextView
+            android:id="@+id/departmentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Major"
+            android:textSize="20dp" />
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/Major"
+            android:prompt="@string/MajorPrompt" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/continueButton"
             android:layout_width="146dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:background="@color/SkyBlue"
-            android:text="Login"
+            android:text="Register"
             android:textColor="@color/White"
             android:textColorHint="@color/White"
             android:textSize="22dp" />
 
         <Button
-            android:id="@+id/signupButton"
+            android:id="@+id/loginButton"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="New User? Sign up here"
-            android:textColor="@color/SkyBlue"
             android:background="@color/White"
-            android:textSize="22dp"/>
-           
-            
+            android:text="Already have an account? Log in"
+            android:textColor="@color/SkyBlue"
+            android:textSize="22dp" />
     </LinearLayout>
 
-    
 </RelativeLayout>
