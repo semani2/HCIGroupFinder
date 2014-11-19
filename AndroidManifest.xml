@@ -44,6 +44,10 @@
             android:name=".LogoutActivity"
             android:label="@string/title_activity_logout" >
         </activity>
+        <activity
+            android:name=".AppHome"
+            android:label="@string/title_activity_app_home" >
+        </activity>
     </application>
 
 </manifest>
