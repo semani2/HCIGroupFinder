@@ -22,9 +22,11 @@ public class HomeFragment extends Fragment {
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 			
 			 View rootView = inflater.inflate(R.layout.fragment_app_home, container, false);
+			 session = new SessionManager(getActivity());
+			 session.checkLogin();
 			 
 			 welcomeText = (TextView)rootView.findViewById(R.id.textView2);
-			 session = new SessionManager(getActivity());
+			 
 			 
 			 userDetails = session.getUserDetails();
 			 

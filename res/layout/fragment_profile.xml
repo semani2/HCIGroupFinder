@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="prajnan.hci.studygroupfinder.ProfileFragment$PlaceholderFragment" >
+    
+    <!-- Header -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="360dp"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/SkyBlue"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:text="Study Group Finder"
+            android:textColor="@color/White"
+            android:textSize="25dp" />
+    </LinearLayout>
+    <!-- Login Page Body -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="360dp"
+        android:layout_height="450dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="18dp"
+        android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Profile Picture"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:id="@+id/pictureButton"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/SkyBlue"
+            android:text="Select Picture"
+            android:textColor="@color/White"
+            android:textColorHint="@color/White"
+            android:textSize="22dp"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/placeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text=""
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/oldPasswordText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Old Password"
+            android:inputType="textPassword" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/newPasswordText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="New Password"
+            android:inputType="textPassword" />
+        
+        <Button
+            android:id="@+id/changePasswordButton"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/SkyBlue"
+            android:text="Change Password"
+            android:textColor="@color/White"
+            android:textColorHint="@color/White"
+            android:textSize="22dp" />
+
+        
+    </LinearLayout>
+    
+
+</RelativeLayout>

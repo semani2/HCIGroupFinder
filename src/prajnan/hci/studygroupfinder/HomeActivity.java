@@ -170,10 +170,10 @@ public class HomeActivity extends Activity {
         Fragment fragment = null;
         switch (position) {
         case 0:
-            fragment = new CreateGroupFragment();
+            fragment = new HomeFragment();
             break;
         case 1:
-           // fragment = new FindPeopleFragment();
+        	fragment = new CreateGroupFragment();
             break;
         case 2:
             //fragment = new PhotosFragment();
@@ -182,7 +182,7 @@ public class HomeActivity extends Activity {
             //fragment = new CommunityFragment();
             break;
         case 4:
-            //fragment = new PagesFragment();
+            fragment = new ProfileFragment();
             break;
         case 5:
             fragment = new LogoutFragment();
