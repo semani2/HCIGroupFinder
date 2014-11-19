@@ -1,6 +1,8 @@
 package prajnan.hci.studygroupfinder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import session.SessionManager;
@@ -33,6 +35,7 @@ public class RegistrationActivity extends Activity {
 	Spinner majorSpinner;
 	Firebase sgfFirebase;
 	SessionManager session;
+	List<String> groups;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,9 @@ public class RegistrationActivity extends Activity {
 		passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 		emailEditText = (EditText) findViewById(R.id.emailEditText);
 		majorSpinner = (Spinner) findViewById(R.id.majorSpinner);
+		
+		//Groups
+		groups = new ArrayList<String>();
 		
 		//Setting up session manager
 		session = new SessionManager(getApplicationContext());
@@ -134,7 +140,7 @@ public class RegistrationActivity extends Activity {
 			    	        sgfFirebase.child("users").child(authData.getUid()).child("Name").setValue(name);
 			    	        sgfFirebase.child("users").child(authData.getUid()).child("Major").setValue(major);
 			    	        sgfFirebase.child("users").child(authData.getUid()).child("Email").setValue(email);
-			    	        
+			    	        sgfFirebase.child("users").child(authData.getUid()).child("Groups").setValue(groups);
 			    	        //Initialize session
 			    	        session.createLoginSession(email,authData.getUid());
 			    	        

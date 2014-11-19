@@ -1,13 +1,24 @@
 package prajnan.hci.studygroupfinder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import session.SessionManager;
+
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +31,13 @@ public class CreateGroup2 extends Activity {
 	
 	EditText membersEditText, messageEditText;
 	Button inviteButton;
-	String message, groupId, members;
-	Firebase sgfFirebase;
-
+	String message, groupId, members, uid;
+	Firebase sgfFirebase, userRefFirebase;
+	//Map<Integer,String> groups = new HashMap<Integer,String>();
+	List<String> groups = new ArrayList<String>();
+	SessionManager session;
+	Map<String, String> userDetails = new HashMap<String,String>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,12 +48,20 @@ public class CreateGroup2 extends Activity {
 		messageEditText = (EditText) findViewById(R.id.messageEditText);
 		inviteButton = (Button) findViewById(R.id.inviteButton);
 		
+		
+		
 		//Setting up Firebase
 		Firebase.setAndroidContext(this);
 		
 		// group id from intent
 		Intent intent = getIntent();
 		groupId = intent.getStringExtra("groupId");
+		
+		//Retreving uid
+		session = new SessionManager(this);
+		
+		userDetails = session.getUserDetails();
+		uid = userDetails.get("uid");
 		
 		//Initializing firebase instance of the group
 		sgfFirebase = new Firebase("https://study-group-finder.firebaseio.com/groups/"+groupId+"/");
@@ -62,25 +85,103 @@ public class CreateGroup2 extends Activity {
 					{
 						message = "Welcome to the study group!";
 					}
-					// Adding members to group
-					//Map<String, HashMap<Integer,String>> groupMembers = new HashMap<String, HashMap<Integer, String>>();
-					HashMap<Integer, String> groupMembership = new HashMap<Integer, String>();
-					
-					//Split members entered
-					String[] memberEmail = members.split(",");
-					for(int i=0;i<memberEmail.length;i++)
-					{
-						groupMembership.put(i+1, memberEmail[i]);
-					}
-					
-					sgfFirebase.child("members").setValue(groupMembership);
-					//Adding message to group
-					sgfFirebase.child("message").setValue(message);
-					
-					Toast.makeText(getApplicationContext(), groupId+"  "+sgfFirebase.toString(), Toast.LENGTH_LONG).show();
+					new CreateGroup().execute();
 				}
 			}
 		});
+		
+	}
+	
+	private class CreateGroup extends AsyncTask<Void,Void,String>
+	{
+
+		@Override
+		protected String doInBackground(Void... params) {
+			
+			// Adding members to group
+			
+			HashMap<Integer, String> groupMembership = new HashMap<Integer, String>();
+			
+			//Split members entered
+			String[] memberEmail = members.split(",");
+			int i=0;
+			for(i=0;i<memberEmail.length;i++)
+			{
+				groupMembership.put(i+1, memberEmail[i]);
+			}
+			groupMembership.put(i+1, userDetails.get("email"));
+			sgfFirebase.child("members").setValue(groupMembership);
+			//Adding message to group
+			sgfFirebase.child("message").setValue(message);
+			
+			// Next add the group into each members list of groups
+			
+			//First lets add it into the user who created it.
+			userRefFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid+"/");
+			Log.d("Ref check",userRefFirebase.toString());
+			userRefFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+			    @Override
+			    public void onDataChange(DataSnapshot snapshot) {
+			        //System.out.println(snapshot.getValue());
+			    	groups = (List<String>)snapshot.child("Groups").getValue();
+			    	if(groups == null)
+			    	{
+			    		
+			    		groups = new ArrayList<String>();
+			    		groups.add(groupId);
+			    		Log.d("Groups Null",groups.toString());
+			    	}
+			    	else{
+			    	//int index = groups.size();
+			    	groups.add(groupId);
+			    	}
+			    	userRefFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid+"/");
+			    	userRefFirebase.child("Groups").setValue(groups);
+					Log.d("Frebase ref",userRefFirebase.toString());
+			    }
+			    @Override
+			    public void onCancelled(FirebaseError firebaseError) {
+			        System.out.println("The read failed: " + firebaseError.getMessage());
+			    }
+			});
+			//userRefFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid+"/");
+			
+			
+			//Add group info to all the added members
+			userRefFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/");
+			Log.d("AddToALLRef",userRefFirebase.toString());
+			userRefFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+			    @Override
+			    public void onDataChange(DataSnapshot snapshot) {
+			        //System.out.println(snapshot.getValue());
+			    	Map<String, Object> users = new HashMap<String, Object>();
+			    	users = (HashMap<String, Object>)snapshot.getValue();
+			    	Log.d("Users",users.toString());
+			    	
+			    	// Next iterate over the users to get the UID of the users added to the group
+			    	Log.d("Key Set",users.keySet().toString());
+			    	Set keySet = users.keySet();
+			    	int numUsers = users.size();
+			    	Iterator it = users.entrySet().iterator();
+			    	
+			    	while(it.hasNext()){
+			    		Map.Entry pairs = (Map.Entry) it.next();
+			    		Log.d("UsersHashMap",pairs.getKey()+"="+pairs.getValue());
+			    		it.remove();
+			    	}
+			    	
+			    }
+			    @Override
+			    public void onCancelled(FirebaseError firebaseError) {
+			        System.out.println("The read failed: " + firebaseError.getMessage());
+			    }
+			});
+			
+			
+			//Toast.makeText(getApplicationContext(), groupId+"  "+sgfFirebase.toString(), Toast.LENGTH_LONG).show();
+		
+			return null;
+		}
 		
 	}
 

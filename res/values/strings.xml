@@ -45,5 +45,6 @@
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_create_group">CreateGroupActivity</string>
     <string name="title_activity_create_group2">CreateGroup2</string>
+    <string name="title_activity_logout">LogoutActivity</string>
 
 </resources>
