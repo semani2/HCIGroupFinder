@@ -163,6 +163,7 @@ public class CreateGroup2 extends Activity {
 			    	Set keySet = users.keySet();
 			    	int numUsers = users.size();
 			    	Iterator it = users.entrySet().iterator();
+			    	List<String> uids = new ArrayList<String>();
 			    	
 			    	while(it.hasNext()){
 			    		Map.Entry pairs = (Map.Entry) it.next();
@@ -172,17 +173,57 @@ public class CreateGroup2 extends Activity {
 			    		for(int j=0;j<memberEmail.length;j++)
 			    		{
 			    			// Check if the current user is present in the member emails list
-			    			if(currentUser.get("Email") == memberEmail[j])
+			    			Log.d("Variable check",currentUser.get("Email")+" ,"+memberEmail[j]);
+			    			if(currentUser.get("Email").equals(memberEmail[j]))
 			    			{
-			    				if(memberEmail[j] != userDetails.get("email"))
+			    				if(!memberEmail[j].equals(userDetails.get("email")))
 			    				{
 			    					// Not the owner of the group
 			    					
+			    					uids.add(pairs.getKey().toString());
+			    					Log.d("Added",pairs.getKey().toString() +" to "+uids.toString());
 			    				}
 			    			}
 			    		}
 			    		it.remove();
 			    	}
+			    	
+			    	// UIDS of members
+			    	Log.d("UIDS List",uids.toString());
+			    	
+			    	// next to each of the UID in the UIDS list add the group ID to their Groups attribute
+			    	for(int uidCount=0;uidCount<uids.size();uidCount++)
+			    	{
+			    		final String localUid = uids.get(uidCount).toString();
+			    		userRefFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+localUid+"/");
+						Log.d("Ref check",userRefFirebase.toString());
+						userRefFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+						    @Override
+						    public void onDataChange(DataSnapshot snapshot) {
+						        //System.out.println(snapshot.getValue());
+						    	groups = (List<String>)snapshot.child("Groups").getValue();
+						    	if(groups == null)
+						    	{
+						    		
+						    		groups = new ArrayList<String>();
+						    		groups.add(groupId);
+						    		Log.d("Groups Null",groups.toString());
+						    	}
+						    	else{
+						    	//int index = groups.size();
+						    	groups.add(groupId);
+						    	}
+						    	userRefFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+localUid+"/");
+						    	userRefFirebase.child("Groups").setValue(groups);
+								Log.d("Frebase ref",userRefFirebase.toString());
+						    }
+						    @Override
+						    public void onCancelled(FirebaseError firebaseError) {
+						        System.out.println("The read failed: " + firebaseError.getMessage());
+						    }
+						});
+			    	}
+			    	
 			    	
 			    }
 			    @Override
