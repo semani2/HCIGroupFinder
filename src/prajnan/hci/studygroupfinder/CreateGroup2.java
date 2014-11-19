@@ -103,7 +103,7 @@ public class CreateGroup2 extends Activity {
 			HashMap<Integer, String> groupMembership = new HashMap<Integer, String>();
 			
 			//Split members entered
-			String[] memberEmail = members.split(",");
+			final String[] memberEmail = members.split(",");
 			int i=0;
 			for(i=0;i<memberEmail.length;i++)
 			{
@@ -167,6 +167,20 @@ public class CreateGroup2 extends Activity {
 			    	while(it.hasNext()){
 			    		Map.Entry pairs = (Map.Entry) it.next();
 			    		Log.d("UsersHashMap",pairs.getKey()+"="+pairs.getValue());
+			    		Map<String, String> currentUser = (HashMap<String, String>)pairs.getValue();
+			    		Log.d("CurrentUSerKeys",currentUser.keySet().toString());
+			    		for(int j=0;j<memberEmail.length;j++)
+			    		{
+			    			// Check if the current user is present in the member emails list
+			    			if(currentUser.get("Email") == memberEmail[j])
+			    			{
+			    				if(memberEmail[j] != userDetails.get("email"))
+			    				{
+			    					// Not the owner of the group
+			    					
+			    				}
+			    			}
+			    		}
 			    		it.remove();
 			    	}
 			    	
