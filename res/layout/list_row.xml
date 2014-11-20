@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_row_selector"
+    android:padding="8dp" >
+
+    <!-- Thumbnail Image -->
+
+    <ImageView
+        android:id="@+id/groupPic"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="8dp" />
+
+    <!-- Movie Title -->
+
+
+    <!-- Rating -->
+
+
+    <!-- Genre -->
+
+
+    <!-- Release Year -->
+
+    <TextView
+        android:id="@+id/course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/date"
+        android:layout_alignBottom="@+id/date"
+        android:layout_alignRight="@+id/date"
+        android:text="CSC 554"
+        android:textColor="@color/year"
+        android:textSize="@dimen/Course"
+       />
+
+    <TextView
+        android:id="@+id/groupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/groupPic"
+        android:layout_toRightOf="@+id/groupPic"
+        android:text="Demo Group 1"
+        android:textSize="@dimen/GroupName"
+        android:textStyle="bold"
+          />
+
+    <TextView
+        android:id="@+id/place"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/groupName"
+        android:text="Hunt Library 2305"
+        android:textSize="@dimen/Place"
+         android:layout_toRightOf="@+id/groupPic"  />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/groupPic"
+        android:layout_alignLeft="@+id/place"
+        android:text="10/11/2014"
+        android:textColor="@color/genre"
+        android:textSize="@dimen/Date" />
+
+</RelativeLayout>

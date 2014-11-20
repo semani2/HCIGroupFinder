@@ -30,7 +30,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="360dp"
-        android:layout_height="450dp"
+        android:layout_height="470dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
         android:layout_marginTop="18dp"
@@ -102,6 +102,21 @@
             android:ems="10"
             android:inputType="text|time" />
 
+         <TextView
+            android:id="@+id/courseText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Course"
+            android:textSize="20dp" />
+        
+        <EditText
+            android:id="@+id/courseEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
         
         <Button
             android:id="@+id/createButton"

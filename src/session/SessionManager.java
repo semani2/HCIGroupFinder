@@ -34,6 +34,8 @@ public class SessionManager {
     public static final String KEY_EMAIL = "email";
     
     public static final String KEY_UID = "uid";
+    
+    public static final String KEY_PIC = "pic";
      
     // Constructor
     public SessionManager(Context context){
@@ -58,6 +60,17 @@ public class SessionManager {
         // commit changes
         editor.commit();
     }   
+    
+    public void setPicture(String pic)
+    {
+    	editor.putString(KEY_PIC, pic);
+    	editor.commit();
+    }
+    
+    public String getPicture()
+    {
+    	return pref.getString(KEY_PIC, null);
+    }
      
     /**
      * Check login method wil check user login status

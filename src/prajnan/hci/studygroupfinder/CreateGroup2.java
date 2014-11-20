@@ -235,6 +235,7 @@ public class CreateGroup2 extends Activity {
 			
 			//Toast.makeText(getApplicationContext(), groupId+"  "+sgfFirebase.toString(), Toast.LENGTH_LONG).show();
 		
+			// Navigate to new activity
 			return null;
 		}
 		
