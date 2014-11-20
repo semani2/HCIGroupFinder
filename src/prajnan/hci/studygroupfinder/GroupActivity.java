@@ -91,13 +91,16 @@ public class GroupActivity extends Activity {
 		        	isOwner = true;
 		        }
 		        membersList = (List<String>)groupDetails.get("members");
-		        for (int k=1;k<membersList.size();k++)
+		        Log.d("Member size",String.valueOf(membersList.size()));
+		        members="";
+		        for (int k=0;k<membersList.size();k++)
 		        {
 		        	
 		        	String s = membersList.get(k);
+		        	Log.d("Print the string s",s);
 		            members += s + " ,";
 		        }
-		        membersText.setText("Group Members: "+members);
+		        membersText.setText(members);
 		        
 		        //Next check for user ownership and set buttons and finctinalities
 		        if(isOwner){
@@ -117,7 +120,21 @@ public class GroupActivity extends Activity {
 					});
 		        	
 		        	// Leave or Delete Button
-		        	
+		        	leaveOrDeleteButton.setText("Delete Group");
+		        	leaveOrDeleteButton.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							//Delete group
+							//First get list of all members
+							//Delete the group id from their list of group memberships
+							Log.d("DeleteMembers",membersList.toString());
+							for (String member : membersList){
+								Log.d("Members",member);
+							}
+							
+						}
+					});
 		        	
 		        }
 		        else

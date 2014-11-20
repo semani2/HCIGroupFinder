@@ -107,9 +107,9 @@ public class CreateGroup2 extends Activity {
 			int i=0;
 			for(i=0;i<memberEmail.length;i++)
 			{
-				groupMembership.put(i+1, memberEmail[i]);
+				groupMembership.put(i, memberEmail[i]);
 			}
-			groupMembership.put(i+1, userDetails.get("email"));
+			groupMembership.put(i, userDetails.get("email"));
 			sgfFirebase.child("members").setValue(groupMembership);
 			//Adding message to group
 			sgfFirebase.child("message").setValue(message);

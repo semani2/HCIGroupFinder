@@ -94,7 +94,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="44dp"
-                android:text="Button" />
+                 />
 
             <Button
                 android:id="@+id/leaveOrDeleteButton"
@@ -103,7 +103,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="49dp"
-                android:text="Button" />
+                 />
 
         </RelativeLayout>
 
