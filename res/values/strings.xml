@@ -48,5 +48,6 @@
     <string name="title_activity_logout">LogoutActivity</string>
     <string name="title_activity_app_home">AppHome</string>
     <string name="title_activity_profile_fragment">ProfileFragment</string>
+    <string name="title_activity_group">GroupActivity</string>
 
 </resources>

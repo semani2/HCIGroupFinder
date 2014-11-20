@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Group {
-    private String groupName, groupPic, course, place, date;
+    private String groupName, groupPic, course, place, date, groupId;
     
     
  
@@ -11,14 +11,22 @@ public class Group {
     }
  
     public Group(String name, String groupPic, String course, String place,
-            String date) {
+            String date, String groupId) {
         this.groupName = name;
         this.groupPic = groupPic;
         this.course = course;
         this.place = place;
         this.date = date;
+        this.groupId = groupId;
     }
  
+    public String getGroupId(){
+    	return groupId;
+    }
+    
+    public void setGroupId(String groupId){
+    	this.groupId = groupId;
+    }
     public String getTitle() {
         return groupName;
     }

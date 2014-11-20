@@ -61,6 +61,7 @@ public class CustomListAdapter extends BaseAdapter {
         TextView place = (TextView) convertView.findViewById(R.id.place);
         TextView date = (TextView) convertView.findViewById(R.id.date);
         TextView course = (TextView) convertView.findViewById(R.id.course);
+        TextView groupId = (TextView) convertView.findViewById(R.id.groupIdText);
  
         // getting movie data for the row
         Group m = groupItems.get(position);
@@ -80,6 +81,9 @@ public class CustomListAdapter extends BaseAdapter {
          
         // release year
         course.setText(String.valueOf(m.getCourse()));
+        
+        //GroupId
+        groupId.setText(m.getGroupId());
  
         return convertView;
     }
