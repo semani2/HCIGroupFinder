@@ -223,7 +223,10 @@ public class CreateGroup2 extends Activity {
 						    }
 						});
 			    	}
-			    	
+			    	Intent goToGroup = new Intent(CreateGroup2.this, GroupActivity.class);
+			    	goToGroup.putExtra("groupId", groupId);
+			    	startActivity(goToGroup);
+			    	finish();
 			    	
 			    }
 			    @Override

@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment {
 		                	    	group.setTitle(groupDetails.get("name"));
 		                	    	group.setPlace(groupDetails.get("place"));
 		                	    	group.setDate(groupDetails.get("date"));
-		                	    	group.setCourse(groupDetails.get("time"));
+		                	    	group.setCourse(groupDetails.get("course"));
 		                	    	group.setGroupPic(groupDetails.get("groupPic"));
 		                	    	group.setGroupId(groupIds.get(j));
 		                	    	//Add group to group List
