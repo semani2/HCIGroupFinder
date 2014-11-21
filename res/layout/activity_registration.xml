@@ -88,20 +88,20 @@
             android:inputType="textPassword" />
         
         <TextView
-            android:id="@+id/departmentText"
+            android:id="@+id/coursesText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="Major"
+            android:text="Courses(ex:CSC 510,CSC 554)"
             android:textSize="20dp" />
 
-        <Spinner
-            android:id="@+id/majorSpinner"
+        <EditText
+            android:id="@+id/coursesEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/Major"
-            android:prompt="@string/MajorPrompt" />
+            android:ems="10"
+            android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/registerButton"

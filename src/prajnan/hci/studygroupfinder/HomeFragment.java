@@ -73,7 +73,8 @@ public class HomeFragment extends Fragment {
 		            public void onDataChange(DataSnapshot snapshot) {
 		            	
 		                groupIds = (List<String>) snapshot.getValue();
-		                if(groupIds!=null){
+		                //Log.d("GroupIDS",groupIds.toString());
+		                if(groupIds != null){
 		                //Log.d("GroupIDs",groupIds.toString());
 		                //Iterate over each of the groupID to populate the list
 		                for(int i=0;i<groupIds.size();i++)
@@ -107,12 +108,16 @@ public class HomeFragment extends Fragment {
 		                hidePDialog();
 		                
 		                }
+		                else
+		                {
+		                	hidePDialog();
+		                }
 		            }
 		            @Override
 		            public void onCancelled(FirebaseError firebaseError) {
 		            }
 		        });
-		        if(groupIds!=null){
+		        if(groupIds != null){
 		        Log.d("GroupList",groupList.toString());
 		        adapter = new CustomListAdapter(getActivity(), groupList);
 		        listView.setAdapter(adapter);
@@ -135,7 +140,6 @@ public class HomeFragment extends Fragment {
 		        
 		        }
 		        
-			 
 			 return rootView;
 	 }
 	 private void hidePDialog() {

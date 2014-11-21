@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -13,6 +14,7 @@ import com.firebase.client.ValueEventListener;
 
 import session.SessionManager;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,9 @@ public class GroupActivity extends Activity {
 	Button addOrJoinButton, leaveOrDeleteButton;
 	List<String> membersList= new ArrayList<String>();
 	List<String> groupsList = new ArrayList<String>();
+	List<String> userGroups = new ArrayList<String>();
+	private ProgressDialog pDialog;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -125,12 +130,65 @@ public class GroupActivity extends Activity {
 						
 						@Override
 						public void onClick(View v) {
+							Log.d("KEY_DELETE","IN DELETE GROUP");
+							//pDialog = new ProgressDialog(getApplicationContext());
+					        // Showing progress dialog before making http request
+					        //pDialog.setMessage("Deleting group...");
+					        //pDialog.show();
 							//Delete group
 							//First get list of all members
 							//Delete the group id from their list of group memberships
 							Log.d("DeleteMembers",membersList.toString());
 							for (String member : membersList){
-								Log.d("Members",member);
+								// For each member
+								userFirebase = new Firebase("https://study-group-finder.firebaseio.com/users");
+								userFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+								    @Override
+								    public void onDataChange(DataSnapshot snapshot) {
+								    	Map<String, Object> users = new HashMap<String, Object>();
+								    	users = (HashMap<String, Object>)snapshot.getValue();
+								    	Log.d("Users",users.toString());
+								    	
+								    	// Next iterate over the users to get the UID of the users added to the group
+								    	Log.d("Key Set",users.keySet().toString());
+								    	Set keySet = users.keySet();
+								    	int numUsers = users.size();
+								    	Iterator it = users.entrySet().iterator();
+								    	List<String> uids = new ArrayList<String>();
+								    	while(it.hasNext()){
+								    		Map.Entry pairs = (Map.Entry) it.next();
+								    		Log.d("UsersHashMap",pairs.getKey()+"="+pairs.getValue());
+								    		Map<String, Object> currentUser = (HashMap<String, Object>)pairs.getValue();
+								    		Log.d("CurrentUSerKeys",currentUser.keySet().toString());
+								    		for(int j=0;j<membersList.size();j++)
+								    		{
+								    			// Check if the  user is present in the member emails list
+								    			if(membersList.contains((String)currentUser.get("Email")))
+								    			{
+								    				//User is in this groups member list
+								    				groupsList = (List<String>)currentUser.get("Groups");
+								    				groupsList.remove(groupId);
+								    				Firebase userGroupsList = new Firebase("https://study-group-finder.firebaseio.com/users/"+pairs.getKey().toString()+"/Groups");
+								    				userGroupsList.setValue(groupsList);
+								    			}
+								    			
+								    		}
+								    		it.remove();
+								    	}
+								    	//Delete the group
+								    	Firebase group = new Firebase("https://study-group-finder.firebaseio.com/groups/"+groupId);
+								    	group.setValue(null);
+								    	
+								    	Intent goHome = new Intent(GroupActivity.this, HomeActivity.class);
+								    	startActivity(goHome);
+								    	finish();
+								    	
+								    	
+								    }
+								    @Override
+								    public void onCancelled(FirebaseError firebaseError) {
+								    }
+								});
 							}
 							
 						}
@@ -144,6 +202,7 @@ public class GroupActivity extends Activity {
 		        	Log.d("Members of the group",String.valueOf(membersList.contains(emailId)));
 		        	if(membersList.contains(emailId)){
 		        		// User is already member so disable the button
+		        		addOrJoinButton.setText("Join Group");
 		        		addOrJoinButton.setEnabled(false);
 					}
 		        	else
@@ -168,8 +227,16 @@ public class GroupActivity extends Activity {
 								        // Get user's groups list 
 								    	//Append the group iD and push it back
 								    	groupsList = (List<String>)snapshot.getValue();
+								    	if(groupsList == null)
+								    	{
+								    		groupsList = new ArrayList<String>();
+								    	}
 								    	groupsList.add(groupId);
 								    	userGroups.setValue(groupsList);
+								    	Intent refresh = new Intent(GroupActivity.this,GroupActivity.class);
+								    	refresh.putExtra("groupId", groupId);
+								    	startActivity(refresh);
+								    	finish();
 								    }
 								    @Override
 								    public void onCancelled(FirebaseError firebaseError) {
@@ -180,7 +247,47 @@ public class GroupActivity extends Activity {
 		        	}
 		        	
 		        	// Leave or Delete Button
-		        	
+		        	if(!membersList.contains(emailId)){
+		        		// User is nor a member nor the owner
+		        		leaveOrDeleteButton.setText("Leave Group");
+		        		leaveOrDeleteButton.setEnabled(false);
+					}
+		        	else
+		        	{
+		        		//User is not owner but a member so option to leave the group
+		        		leaveOrDeleteButton.setText("Leave Group");
+		        		leaveOrDeleteButton.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								final Firebase userGroupList = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid+"/Groups");
+								final Firebase groupToDeleteFrom = new Firebase("https://study-group-finder.firebaseio.com/groups/"+groupId+"/members");
+								userGroupList.addListenerForSingleValueEvent(new ValueEventListener() {
+								    @Override
+								    public void onDataChange(DataSnapshot snapshot) {
+								        userGroups =  (List<String>)snapshot.getValue();
+								        Log.d("User Group Before delete", userGroups.toString());
+								        userGroups.remove(groupId);
+								        Log.d("User Group Before delete", userGroups.toString());
+								        userGroupList.setValue(userGroups);
+								        
+								        //Next remove the user's email id from the members list of the group
+								        membersList.remove(emailId);
+								        Log.d("Members list after removing user",membersList.toString());
+								        groupToDeleteFrom.setValue(membersList);
+								        Log.d("Firebase Ref",groupToDeleteFrom.toString());
+								        Intent refresh = new Intent(GroupActivity.this, GroupActivity.class);
+								        refresh.putExtra("groupId", groupId);
+								        startActivity(refresh);
+								        finish();
+								    }
+								    @Override
+								    public void onCancelled(FirebaseError firebaseError) {
+								    }
+								});
+							}
+						});
+		        	}
 		        }
 		        
 		    }

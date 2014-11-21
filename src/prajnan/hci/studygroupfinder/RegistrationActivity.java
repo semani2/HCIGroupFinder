@@ -30,12 +30,13 @@ import android.widget.Toast;
 public class RegistrationActivity extends Activity {
 	
 	Button loginButton, registerButton;
-	EditText nameEditText, passwordEditText, emailEditText;
-	String name, email, password, major;
+	EditText nameEditText, passwordEditText, emailEditText, coursesEditText;
+	String name, email, password, courses;
 	Spinner majorSpinner;
 	Firebase sgfFirebase;
 	SessionManager session;
 	List<String> groups;
+	String[] courseList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class RegistrationActivity extends Activity {
 		nameEditText = (EditText) findViewById(R.id.nameEditText);
 		passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 		emailEditText = (EditText) findViewById(R.id.emailEditText);
-		majorSpinner = (Spinner) findViewById(R.id.majorSpinner);
+		coursesEditText = (EditText) findViewById(R.id.coursesEditText);
 		
 		//Groups
 		groups = new ArrayList<String>();
@@ -75,21 +76,6 @@ public class RegistrationActivity extends Activity {
 			}
 		});
 		
-		//Major spinner item selected listener
-		majorSpinner.setOnItemSelectedListener(
-	              new AdapterView.OnItemSelectedListener() {
-	                  @Override
-	                  public void onItemSelected(AdapterView<?> arg0, View arg1,
-	                          int arg2, long arg3) {
-	                    major = String.valueOf(majorSpinner.getSelectedItem());
-	                    
-	                  }
-	                  @Override
-	                  public void onNothingSelected(AdapterView<?> arg0) {
-	                      major ="";
-	                  }
-	              }
-	          );
 		
 		//Register Button On Click Listener
 		registerButton.setOnClickListener(new OnClickListener() {
@@ -100,8 +86,19 @@ public class RegistrationActivity extends Activity {
 				name = nameEditText.getText().toString();
 				email = emailEditText.getText().toString();
 				password = passwordEditText.getText().toString();
+				courses = coursesEditText.getText().toString();
+				//Parse courses list
+				courseList = courses.split(",");
+				
+				// CHeck for null
+				if(name.matches("") || email.matches("") || password.matches("") || courses.matches(""))
+				{
+					Toast.makeText(getApplicationContext(), "Please enter all fields!", Toast.LENGTH_LONG);
+				}
+				else{
 				CreateUser createUser = new CreateUser();
 				createUser.execute();
+				}
 			}
 		});
 		
@@ -138,11 +135,14 @@ public class RegistrationActivity extends Activity {
 			    	        }
 			    	        sgfFirebase.child("users").child(authData.getUid()).setValue(map);
 			    	        sgfFirebase.child("users").child(authData.getUid()).child("Name").setValue(name);
-			    	        sgfFirebase.child("users").child(authData.getUid()).child("Major").setValue(major);
+			    	        sgfFirebase.child("users").child(authData.getUid()).child("Courses").setValue(courseList);
 			    	        sgfFirebase.child("users").child(authData.getUid()).child("Email").setValue(email);
 			    	        sgfFirebase.child("users").child(authData.getUid()).child("Groups").setValue(groups);
 			    	        //Initialize session
 			    	        session.createLoginSession(email,authData.getUid());
+			    	        
+			    	        // Toast to set profile picture
+			    	        Toast.makeText(getApplicationContext(), "You can set your profile picture in the profile tab!", Toast.LENGTH_LONG);
 			    	        
 			    	        //Take user to Home Page
 			    	        Intent goHome = new Intent(RegistrationActivity.this, HomeActivity.class);

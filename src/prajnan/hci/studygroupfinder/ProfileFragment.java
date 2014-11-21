@@ -1,7 +1,9 @@
 package prajnan.hci.studygroupfinder;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.firebase.client.DataSnapshot;
@@ -36,15 +38,15 @@ import android.widget.Toast;
 public class ProfileFragment extends Fragment implements OnClickListener {
 	
 	ImageView profilePicture;
-	Button pictureButton, changePasswordButton;
+	Button pictureButton, changePasswordButton, updateCoursesButton;
 	SessionManager session;
 	Map<String, String> userDetails = new HashMap<String,String>();
 	String uid, email, oldPassword, newPassword;
 	
-	Firebase sgfFirebase;
-	EditText oldPasswordText, newPasswordText;
+	Firebase sgfFirebase, coursesFirebase;
+	EditText oldPasswordText, newPasswordText, coursesEditText;
 	private static final int IMAGE_PICKER_SELECT = 999;
-	
+	List<String> courses = new ArrayList<String>();
 	String profilePicString = "";
 	
 	public ProfileFragment(){}
@@ -65,6 +67,8 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		 profilePicture = (ImageView) rootView.findViewById(R.id.imageView1);
 		 oldPasswordText = (EditText) rootView.findViewById(R.id.oldPasswordText);
 		 newPasswordText = (EditText) rootView.findViewById(R.id.newPasswordText);
+		 coursesEditText = (EditText) rootView.findViewById(R.id.coursesEditText);
+		 updateCoursesButton = (Button) rootView.findViewById(R.id.updateCoursesButton);
 		 
 		 sgfFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid);
 		 
@@ -74,7 +78,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 			    public void onDataChange(DataSnapshot snapshot) {
 			    	Log.d("PhotoRef",profilePicRef.toString());
 			        profilePicString = (String)snapshot.getValue();
-			        if(!profilePicString.matches(""))
+			        if(profilePicString != null)
 					 {
 						 Log.d("Profile Pic",profilePicString);
 						 profilePicture.setImageBitmap(decodeBase64(profilePicString));
@@ -86,7 +90,26 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 			    }
 			});
 		 
-		
+		// Courses list
+		coursesFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid+"/Courses");
+		coursesFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+		    @Override
+		    public void onDataChange(DataSnapshot snapshot) {
+		        courses = (List<String>) snapshot.getValue();
+		        String course ="";
+		        int i=0;
+		        for(i=0;i<courses.size()-1;i++)
+		        {
+		        	course += courses.get(i) + ",";
+		        }
+		        course+=courses.get(i);
+		        Log.d("Courses",course);
+		        coursesEditText.setText(course);
+		        }
+		    @Override
+		    public void onCancelled(FirebaseError firebaseError) {
+		    }
+		});
 		 
 		 //Log.d("Profile Pic before match",profilePicString);
 		 
@@ -122,6 +145,24 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 			}
 			}
 			
+		});
+		 
+		 updateCoursesButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String course = coursesEditText.getText().toString();
+				if(course.matches(""))
+					Toast.makeText(getActivity(), "Please enter your courses", Toast.LENGTH_LONG);
+				else
+				{
+					String courses[] = course.split(",");
+					coursesFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid+"/Courses");
+					coursesFirebase.setValue(courses);
+					Toast.makeText(getActivity(), "Your courses have been updated", Toast.LENGTH_LONG);
+				}
+				
+			}
 		});
 		 
 		 return rootView;

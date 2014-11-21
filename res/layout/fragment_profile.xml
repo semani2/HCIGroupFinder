@@ -33,7 +33,7 @@
         android:layout_height="450dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical" >
         
         <TextView
@@ -54,14 +54,14 @@
         <Button
             android:id="@+id/pictureButton"
             android:layout_width="146dp"
-            android:layout_height="wrap_content"
+            android:layout_height="31dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:background="@color/SkyBlue"
             android:text="Select Picture"
             android:textColor="@color/White"
             android:textColorHint="@color/White"
-            android:textSize="22dp"
-            android:layout_gravity="center_horizontal" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/placeText"
@@ -94,15 +94,35 @@
         <Button
             android:id="@+id/changePasswordButton"
             android:layout_width="146dp"
-            android:layout_height="wrap_content"
+            android:layout_height="26dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@color/SkyBlue"
             android:text="Change Password"
             android:textColor="@color/White"
             android:textColorHint="@color/White"
-            android:textSize="22dp" />
+            android:textSize="15dp" />
 
+        <EditText
+            android:id="@+id/coursesEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="Your enrolled courses" />
+        
+        <Button
+            android:id="@+id/updateCoursesButton"
+            android:layout_width="146dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@color/SkyBlue"
+            android:text="Update my Courses"
+            android:textColor="@color/White"
+            android:textColorHint="@color/White"
+            android:textSize="15dp" />
+        
         
     </LinearLayout>
     
