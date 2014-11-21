@@ -57,6 +57,10 @@
             android:name=".GroupActivity"
             android:label="@string/title_activity_group" >
         </activity>
+        <activity
+            android:name=".AddMember"
+            android:label="@string/title_activity_add_member" >
+        </activity>
     </application>
 
 </manifest>
