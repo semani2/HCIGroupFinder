@@ -178,6 +178,7 @@ public class CreateGroupFragment extends Fragment implements OnClickListener {
 							groupId = newGroupsRef.getKey();
 					        Intent addMembers = new Intent(getActivity(),CreateGroup2.class);
 							addMembers.putExtra("groupId", groupId);
+							addMembers.putExtra("groupName", groupName);
 							startActivity(addMembers);
 
 					    }

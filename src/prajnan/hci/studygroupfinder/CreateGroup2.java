@@ -31,11 +31,12 @@ public class CreateGroup2 extends Activity {
 	
 	EditText membersEditText, messageEditText;
 	Button inviteButton;
-	String message, groupId, members, uid;
+	String message, groupId, members, uid, emailid,  groupName;
 	Firebase sgfFirebase, userRefFirebase;
 	//Map<Integer,String> groups = new HashMap<Integer,String>();
 	List<String> groups = new ArrayList<String>();
 	SessionManager session;
+	NotificationManager notification;
 	Map<String, String> userDetails = new HashMap<String,String>();
 	
 	@Override
@@ -56,12 +57,17 @@ public class CreateGroup2 extends Activity {
 		// group id from intent
 		Intent intent = getIntent();
 		groupId = intent.getStringExtra("groupId");
+		groupName = intent.getStringExtra("groupName");
 		
 		//Retreving uid
 		session = new SessionManager(this);
 		
+		//Notification
+		notification = new NotificationManager(getApplicationContext());
+		
 		userDetails = session.getUserDetails();
 		uid = userDetails.get("uid");
+		emailid = userDetails.get("email");
 		
 		//Initializing firebase instance of the group
 		sgfFirebase = new Firebase("https://study-group-finder.firebaseio.com/groups/"+groupId+"/");
@@ -109,6 +115,8 @@ public class CreateGroup2 extends Activity {
 			{
 				groupMembership.put(i, memberEmail[i]);
 			}
+			// TODO
+			//Check if user is already there in members list if so dont add again, make a new activity
 			groupMembership.put(i, userDetails.get("email"));
 			sgfFirebase.child("members").setValue(groupMembership);
 			//Adding message to group
@@ -223,6 +231,7 @@ public class CreateGroup2 extends Activity {
 						    }
 						});
 			    	}
+			    	notification.createNotification(emailid, groupId, "You have been added to the new group "+groupName);
 			    	Intent goToGroup = new Intent(CreateGroup2.this, GroupActivity.class);
 			    	goToGroup.putExtra("groupId", groupId);
 			    	startActivity(goToGroup);

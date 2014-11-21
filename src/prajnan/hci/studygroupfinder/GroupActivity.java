@@ -28,10 +28,11 @@ import android.widget.TextView;
 public class GroupActivity extends Activity {
 	
 	SessionManager session;
+	NotificationManager notification;
 	Firebase groupFirebase,userFirebase;
 	Map<String, Object> groupDetails = new HashMap<String,Object>();
 	Map<String, String> userDetails = new HashMap<String,String>();
-	String uid, groupId, emailId, createdBy, members;
+	String uid, groupId, emailId, createdBy, members, groupName;
 	Boolean isOwner = false;
 	TextView groupNameText, placeText, dateText, courseText, timeText, membersText;
 	Button addOrJoinButton, leaveOrDeleteButton;
@@ -52,9 +53,12 @@ public class GroupActivity extends Activity {
 		// Initalize session
 		session = new SessionManager(this);
 		
+		notification = new NotificationManager(this);
+		
 		// Get Group Id from Intent
 		Intent intent = getIntent();
 		groupId = intent.getStringExtra("groupId");
+		
 		
 		//Setting up UI ELements
 		groupNameText = (TextView) findViewById(R.id.groupNameText);
@@ -86,6 +90,7 @@ public class GroupActivity extends Activity {
 		    		Log.d("GroupHashMap",pairs.getKey()+"="+pairs.getValue());
 		        }
 		        groupNameText.setText((String)groupDetails.get("name"));
+		        groupName = (String)groupDetails.get("name");
 		        courseText.setText("Course: "+(String)groupDetails.get("course"));
 		        timeText.setText("Time: "+(String)groupDetails.get("time"));
 		        dateText.setText("Date: "+(String)groupDetails.get("date"));
@@ -138,6 +143,7 @@ public class GroupActivity extends Activity {
 							//Delete group
 							//First get list of all members
 							//Delete the group id from their list of group memberships
+							notification.createNotification(uid, groupId, "The group "+groupName+" has been deleted.");
 							Log.d("DeleteMembers",membersList.toString());
 							for (String member : membersList){
 								// For each member
@@ -233,6 +239,7 @@ public class GroupActivity extends Activity {
 								    	}
 								    	groupsList.add(groupId);
 								    	userGroups.setValue(groupsList);
+								    	notification.createNotification(uid, groupId, emailId+" has joined the group "+groupName);
 								    	Intent refresh = new Intent(GroupActivity.this,GroupActivity.class);
 								    	refresh.putExtra("groupId", groupId);
 								    	startActivity(refresh);
@@ -276,6 +283,7 @@ public class GroupActivity extends Activity {
 								        Log.d("Members list after removing user",membersList.toString());
 								        groupToDeleteFrom.setValue(membersList);
 								        Log.d("Firebase Ref",groupToDeleteFrom.toString());
+								        notification.createNotification(uid, groupId, emailId+ " has left the group "+groupName);
 								        Intent refresh = new Intent(GroupActivity.this, GroupActivity.class);
 								        refresh.putExtra("groupId", groupId);
 								        startActivity(refresh);
