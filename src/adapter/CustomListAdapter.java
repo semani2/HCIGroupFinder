@@ -12,6 +12,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class CustomListAdapter extends BaseAdapter {
         Group m = groupItems.get(position);
  
         // thumbnail image
+        Log.d("InAdapter",m.getGroupId()+m.getTitle()+m.getDate()+m.getPlace()+m.getCourse()+m.getGroupPic());
         thumbNail.setImageBitmap(decodeBase64(m.getGroupPic()));
          
         // title

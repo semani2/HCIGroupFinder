@@ -246,7 +246,7 @@ public class HomeActivity extends Activity {
         	fragment = new CreateGroupFragment();
             break;
         case 2:
-            //fragment = new PhotosFragment();
+            fragment = new SearchFragment();
             break;
         case 3:
             fragment = new NotificationFragment();
