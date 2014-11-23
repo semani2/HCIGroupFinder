@@ -35,7 +35,7 @@ public class GroupActivity extends Activity {
 	String uid, groupId, emailId, createdBy, members, groupName;
 	Boolean isOwner = false;
 	TextView groupNameText, placeText, dateText, courseText, timeText, membersText;
-	Button addOrJoinButton, leaveOrDeleteButton;
+	Button addOrJoinButton, leaveOrDeleteButton, editGroupButton;
 	List<String> membersList= new ArrayList<String>();
 	List<String> groupsList = new ArrayList<String>();
 	List<String> userGroups = new ArrayList<String>();
@@ -69,6 +69,7 @@ public class GroupActivity extends Activity {
 		courseText = (TextView) findViewById(R.id.courseText);
 		addOrJoinButton = (Button) findViewById(R.id.addOrJoinButton);
 		leaveOrDeleteButton = (Button) findViewById(R.id.leaveOrDeleteButton);
+		editGroupButton = (Button) findViewById(R.id.editGroupButton);
 		
 		//Check if current user is owner of group
 		//Lets get the emailid of the current user
@@ -198,6 +199,19 @@ public class GroupActivity extends Activity {
 								});
 							}
 							
+						}
+					});
+		        	
+		        	editGroupButton.setVisibility(1);
+		        	editGroupButton.setText("Edit Group");
+		        	editGroupButton.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							Intent goToEdit = new Intent(GroupActivity.this, EditGroupActivity.class);
+							goToEdit.putExtra("groupId",groupId);
+							goToEdit.putExtra("groupName", groupName);
+							startActivity(goToEdit);							
 						}
 					});
 		        	

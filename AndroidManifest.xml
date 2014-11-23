@@ -65,6 +65,10 @@
             android:name=".NotificationFragment"
             android:label="@string/title_activity_notification_fragment" >
         </activity>
+        <activity
+            android:name=".EditGroupActivity"
+            android:label="@string/title_activity_edit_group" >
+        </activity>
     </application>
 
 </manifest>

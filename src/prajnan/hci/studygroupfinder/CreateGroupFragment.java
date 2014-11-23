@@ -92,7 +92,7 @@ public class CreateGroupFragment extends Fragment implements OnClickListener {
                 DatePickerDialog mDatePicker=new DatePickerDialog(getActivity(), new OnDateSetListener() {                  
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                         // TODO Auto-generated method stub                      
-                    	dateEditText.setText(selectedmonth+"/"+selectedday+"/"+selectedyear);
+                    	dateEditText.setText((selectedmonth+1)+"/"+selectedday+"/"+selectedyear);
                     }
                 },mYear, mMonth, mDay);
                 mDatePicker.getDatePicker().setCalendarViewShown(false);

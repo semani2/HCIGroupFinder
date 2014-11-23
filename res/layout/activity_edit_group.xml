@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="prajnan.hci.studygroupfinder.GroupActivity" >
+    tools:context="prajnan.hci.studygroupfinder.EditGroupActivity" >
     
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -40,85 +40,50 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="30dp" />
 
-        <TextView
-            android:id="@+id/placeText"
+        <EditText
+            android:id="@+id/placeEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Meeting place"
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/dateText"
+        <EditText
+            android:id="@+id/dateEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Medium Text"
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/courseText"
+        <EditText
+            android:id="@+id/timeEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Medium Text"
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/timeText"
+        <EditText
+            android:id="@+id/courseEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Medium Text"
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/membersText"
+
+        <Button
+            android:id="@+id/doneButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="140dp"
             android:layout_marginTop="20dp"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:layout_weight="0.18" >
-
-            <Button
-                android:id="@+id/addOrJoinButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="44dp" 
-                android:background="@color/SkyBlue"
-                android:textColor="@color/White" />
-
-            <Button
-                android:id="@+id/leaveOrDeleteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="49dp"
-                android:background="@color/SkyBlue"
-                android:textColor="@color/White"  />
-
-            <Button
-                android:id="@+id/editGroupButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text=""
-                android:visibility="invisible"
-                android:background="@color/SkyBlue"
-                android:textColor="@color/White"  />
-
-        </RelativeLayout>
+            android:background="@color/SkyBlue"
+            android:text="Done"
+            android:textColor="@color/White" />
 
     </LinearLayout>
+    
 
 </RelativeLayout>

@@ -51,5 +51,6 @@
     <string name="title_activity_group">GroupActivity</string>
     <string name="title_activity_add_member">AddMember</string>
     <string name="title_activity_notification_fragment">NotificationFragment</string>
+    <string name="title_activity_edit_group">EditGroupActivity</string>
 
 </resources>
