@@ -50,5 +50,6 @@
     <string name="title_activity_profile_fragment">ProfileFragment</string>
     <string name="title_activity_group">GroupActivity</string>
     <string name="title_activity_add_member">AddMember</string>
+    <string name="title_activity_notification_fragment">NotificationFragment</string>
 
 </resources>

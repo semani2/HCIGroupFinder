@@ -102,7 +102,7 @@ public class AddMember extends Activity {
 			
 			// Adding members to group
 			//Get current members of the group
-			Firebase groupMembers = new Firebase("https://study-group-finder.firebaseio.com/groups/"+groupId+"/members");
+			final Firebase groupMembers = new Firebase("https://study-group-finder.firebaseio.com/groups/"+groupId+"/members");
 			
 					groupMembers.addListenerForSingleValueEvent(new ValueEventListener() {
 					    @Override
@@ -117,7 +117,7 @@ public class AddMember extends Activity {
 							{
 								currentMembers.add(memberEmail[i]);
 							}
-							
+							groupMembers.setValue(currentMembers);
 							
 							// Next add the group into each members list of groups
 							
@@ -198,7 +198,12 @@ public class AddMember extends Activity {
 										    }
 										});
 							    	}
-							    	notification.createNotification(emailid, groupId, memberEmail.toString()+" have been added to the new group "+groupName);
+							    	String memberEmailIds= "";
+							    	for(String s : memberEmail)
+							    	{
+							    		memberEmailIds += s +", ";
+							    	}
+							    	notification.createNotification(emailid, groupId, memberEmailIds+" has(ve) been added to the new group "+groupName);
 							    	Intent goToGroup = new Intent(AddMember.this, GroupActivity.class);
 							    	goToGroup.putExtra("groupId", groupId);
 							    	startActivity(goToGroup);

@@ -61,6 +61,10 @@
             android:name=".AddMember"
             android:label="@string/title_activity_add_member" >
         </activity>
+        <activity
+            android:name=".NotificationFragment"
+            android:label="@string/title_activity_notification_fragment" >
+        </activity>
     </application>
 
 </manifest>

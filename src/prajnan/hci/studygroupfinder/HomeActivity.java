@@ -1,11 +1,20 @@
 package prajnan.hci.studygroupfinder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import session.SessionManager;
 
 import model.NavDrawerItem;
 
+import adapter.LazyAdapter;
 import adapter.NavDrawerListAdapter;
 import android.app.Activity;
 import android.app.Fragment;
@@ -21,6 +30,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
  
 public class HomeActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -40,7 +51,15 @@ public class HomeActivity extends Activity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
     
+    Map<String,String> userDetails = new HashMap<String, String>();
+    
     SessionManager session;
+    
+    Firebase notificationsFirebase;
+    
+    String uid, email;
+    
+    int unreadNotifications = 0;
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +67,56 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
- 
+        
+        //Getting user details
+        userDetails = session.getUserDetails();
+        
+        
+        //Set Firebase context
+        Firebase.setAndroidContext(getApplicationContext());
+        notificationsFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid+"/notifications/");
+        final ArrayList<HashMap<String, String>> notifications = new ArrayList<HashMap<String, String>>();
+        
+        notificationsFirebase = new Firebase("https://study-group-finder.firebaseio.com/users/"+uid+"/notifications");
+		 
+		 //Adding a listener to the notifications firebase to keep listening for any notificatons
+		 notificationsFirebase.orderByKey().addValueEventListener(new ValueEventListener() {
+			    @Override
+			    public void onDataChange(DataSnapshot snapshot) {
+			        //System.out.println(snapshot.getValue());
+			    	//Retreive data from the firebase and push it onto our adapter
+			    	Map<String, String> notificationsMap = new HashMap<String,String>();
+			    	
+			    	notificationsMap = (HashMap<String,String>)snapshot.getValue();
+			    	if(notificationsMap !=null){
+			    	//Log.d("Notifications Keys",notificationsMap.keySet().toString());
+			    	
+			    	// Iterate over each of the notification now
+			    	Iterator it = notificationsMap.entrySet().iterator();
+			    	while(it.hasNext()){
+			    		//HashMap<String,String> newNotification = new HashMap<String,String>();
+			    		Map.Entry pairs = (Map.Entry) it.next();
+			    		//Log.d("NotificationsHashMap",pairs.getKey()+"="+pairs.getValue());
+			    		Map<String, String> currentNotification = (HashMap<String, String>)pairs.getValue();
+			    		//Log.d("CurrentNotification",currentNotification.keySet().toString());
+			    		
+			    		if(currentNotification.get("status").equals("unread")){
+			    			unreadNotifications += 1;
+			    		}
+			    		
+			    	}
+			    
+			    	}
+			    	
+			    	
+			    	
+			    }
+			    @Override
+			    public void onCancelled(FirebaseError firebaseError) {
+			        //System.out.println("The read failed: " + firebaseError.getMessage());
+			    }
+			});
+        
         mTitle = mDrawerTitle = getTitle();
  
         // load slide menu items
@@ -71,12 +139,13 @@ public class HomeActivity extends Activity {
         // Photos
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
         // Communities, Will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
         // Pages
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // What's hot, We  will add a counter here
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
          
+        
  
         // Recycle the typed array
         navMenuIcons.recycle();
@@ -86,6 +155,7 @@ public class HomeActivity extends Activity {
         // setting the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
+        Log.d("Adapter","Setting adapter");
         mDrawerList.setAdapter(adapter);
  
         // enabling action bar app icon and behaving it as toggle button
@@ -179,7 +249,7 @@ public class HomeActivity extends Activity {
             //fragment = new PhotosFragment();
             break;
         case 3:
-            //fragment = new CommunityFragment();
+            fragment = new NotificationFragment();
             break;
         case 4:
             fragment = new ProfileFragment();
