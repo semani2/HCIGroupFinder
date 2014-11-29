@@ -276,6 +276,7 @@ public class GroupActivity extends Activity {
 		        		// User is nor a member nor the owner
 		        		leaveOrDeleteButton.setText("Leave Group");
 		        		leaveOrDeleteButton.setEnabled(false);
+		        		leaveOrDeleteButton.setVisibility(View.GONE);
 					}
 		        	else
 		        	{
