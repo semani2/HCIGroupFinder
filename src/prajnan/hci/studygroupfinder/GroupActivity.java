@@ -221,10 +221,13 @@ public class GroupActivity extends Activity {
 		        	
 		        	//Check if user is already a member or not
 		        	Log.d("Members of the group",String.valueOf(membersList.contains(emailId)));
-		        	if(membersList.contains(emailId)){
+		        	if(membersList.contains(emailId) == true){
 		        		// User is already member so disable the button
-		        		addOrJoinButton.setText("Join Group");
+		        		Log.d("Members List",String.valueOf(membersList.contains(emailId)));
 		        		addOrJoinButton.setEnabled(false);
+		        		addOrJoinButton.setText("Join Group");
+		        		addOrJoinButton.setVisibility(View.GONE);
+		        		Log.d("ButtonVisibility",String.valueOf(addOrJoinButton.getVisibility()));
 					}
 		        	else
 		        	{
